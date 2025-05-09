@@ -1,49 +1,42 @@
-# Wallpaper Pattern Generator, ***Wallpaper for the Mind***
+# Wallpaper Pattern Generator – ***Wallpaper for the Mind***
 
 ![Circle](circle_1.png)
 
 ## Historical Context
 
-This Python script generates visually stunning wallpaper patterns based on a mathematical algorithm developed by John E. Connett. The algorithm was introduced in A.K. Dewdney's "Computer Recreations" column in *Scientific American* (September 1986), where he coined the name **Circle²** for this method. It explores the mathematical properties of grid-based coordinate systems and the equation:
+This Python script generates visually striking patterns based on the **Circle² algorithm** developed by John E. Connett. It was popularized in A.K. Dewdney’s *Computer Recreations* column in *Scientific American* (September 1986). The method explores the mathematical beauty of the equation:
 
 $$
-\large
-z = x² + y²
-\large
+\large z = x^2 + y^2
 $$
 
-The **Circle² algorithm** visualizes the distribution of squared sums `z = x² + y²` for a structured grid of coordinates `(x, y)`. By assigning colors based on the properties of `z`, the algorithm creates concentric circular patterns.
+By applying this formula across a grid of coordinates and assigning colors based on the result, it produces hypnotic, circular wallpaper designs.
 
-### How It Works
+## Algorithm Overview
 
-This algorithm computes a grid-based wallpaper pattern by evaluating the function:
+At the heart of the pattern is the squared sum of coordinates:
 
 $$
-z = x² + y²
+z = x^2 + y^2
 $$
 
-for each grid point `(x, y)`, where `x` and `y` are derived from a scaled coordinate system.  
-The integer part of `z` (or its modulo operation) is used to assign colors cyclically from a predefined palette.
+Each point `(x, y)` on a grid is evaluated using this equation. The value of `z` is then either directly converted to an integer or used with a modulo operation to index into a color palette, creating cyclical, ring-like patterns.
 
-#### **Approach**
+* **Grid Construction**: A rectangular grid is defined using customizable corner and size parameters. In the optimized version, this grid is built using NumPy for speed and efficiency.
 
-1. **Grid Construction**:
-   - The grid spans a defined rectangular area, with `x` and `y` values computed based on a scaling factor.
-   - In the **historical loop-based version**, this is done iteratively for each pixel.
-   - In the **optimized NumPy version**, this is achieved efficiently using **vectorized operations**.
+* **Computation & Coloring**:
 
-2. **Squared Sum Computation**:
-   - Each coordinate pair is mapped to `z = x² + y²`, where `x` and `y` are **not necessarily integers** but follow a structured grid pattern.
+  * `z` is computed at each grid point.
+  * Colors are assigned by taking `int(z) % NUM_COLORS`, cycling through a fixed palette.
+  * The classic version used loops; the current version uses vectorized operations for faster rendering.
 
-3. **Color Assignment**:
-   - The integer part of `z` or its modulo operation `z modulo NUM_COLORS` cycles through a fixed color palette.
-   - The **historical version** explicitly converts `z` to an integer before applying modulo, while the **optimized version** lets **NumPy handle it** directly.
+## Customization
 
-### Customization
+You can tweak these parameters to generate unique visual styles:
 
-Adjust the following parameters to create unique designs:
+* **WIDTH, HEIGHT**: Image resolution.
+* **CORNER\_A, CORNER\_B**: Coordinates of the lower-left corner of the grid.
+* **SIDE**: Length of the square grid area.
+* **NUM\_COLORS**: Number of distinct colors in the palette.
 
-- **WIDTH, HEIGHT**: Resolution of the image.
-- **CORNER_A, CORNER_B**: Lower-left corner of the grid.
-- **SIDE**: Side length of the grid.
-- **NUM_COLORS**: Number of colors in the palette.
+
